@@ -1,0 +1,346 @@
+﻿실습
+
+----------------------------------------------
+
+변수 선언
+
+input 함수를 통해 이름 나이 생일을 입력하고 
+
+나의 이름은 XXX 입니다.
+나의 나이는 XXX 이며 XX대입니다.
+나의 생일은 XXXXXXXX입니다.
+
+출력 되도록 하시오.
+
+name1='name'
+age1='age'
+birthday1='birthday'
+
+name2=input("당신의 {}는 무엇입니까? ".format(name1))
+age2=input("당신의 {}는 무엇입니까? ".format(age1))
+birthday2=input("당신의 {}는 무엇입니까? ".format(birthday1))
+
+print("나의 {}은 {} 입니다.".format(name1,name2))
+print("나의 {}은 {} 이고 나는 {} 대입니다..".format(age1,age2,int(age2)//10*10))
+print("나의 {}은 {} 입니다.".format(birthday1,birtday2))
+
+
+
+
+--------------------------------------------------------
+week=['월','화','수','목','금','토','일']와 for를 이용해서 아래에 있는 내용이 출력 되도록 코딩하시오.
+
+솔로몬 그런디는
+월요일에 태어나서
+화요일에 세례받고
+수요일에 결혼하고
+목요일에 병들어서
+금요일에 악화되어
+토요일에 눈을 감아
+일요일에 묻혔다네
+솔로몬 그런디는
+그렇게 살다 갔네
+
+week=['월','화','수','목','금','토','일']
+
+print("솔로몬 그런디는")
+
+for day in week:
+	if day =='월':
+		print("월요일에 태어나서")
+	if day =='화':
+		print("화요일에 세례받고")
+	if day =='수':
+		print("수요일에 결혼하고")
+	if day =='목':
+		print("목요일에 병들어서")
+	if day =='금':
+		print("금요일에 악화되어")
+	if day =='토':
+		print("토요일에 눈을 감아")
+	if day =='일':
+		print("일요일에 묻혔다네")
+
+print('''솔로몬 그런디는
+그렇게 살다 갔네''')
+
+
+
+
+--------------------------------------------------------
+번호(50번까지 찍히도록),Victory 출력을 50번 반복하시오.
+
+num=0
+
+while num<=50:
+	print("Victory:{}".format(num))
+	num=num+1
+
+--------------------------------------------------------
+
+정수 3개를 입력하면 평균을 구하는 함수를 만들어 보시오.
+
+형태 
+
+ex) average(1,2,3) => 2가 나오도록
+
+def average(x,y,z):
+	return (x+y+z)/3
+
+print("{}와{}와{}의 평균은 {}입니다.".format(3,4,5,average(3,4,5))
+
+or
+
+def average(x,y,z):
+	print("{}와{}와{}의 평균은 {}입니다.".format(x,y,z,(x+y+z)/3))
+
+average(4,5,6)
+
+
+
+
+--------------------------------------------------------
+
+num1 = 40
+
+num2 = 30
+
+
+더하기 
+
+print(num1+num2)
+
+빼기 
+
+print(num1-num2)
+
+곱하기 
+
+print(num1*num2)
+
+나누기 
+
+print(num1/num2)
+
+나누기 후에 값 출력 
+
+print(num1//num2)
+
+나누기 후에 나머지 출력 
+
+print(num1%num2)
+
+자승 
+
+print(num1**num2)
+
+num1과 num2의 곱하기 한 값을 2진수, 8진수, 16진수로 각각 변환 해볼 것
+
+bin(num1*num2)
+oct(num1*num2)
+hex(num1*num2)
+
+------------------------------------------------------------
+
+string1 = "My life"
+
+string2 =  " is mine." 
+
+string3 에 string1과 string2가 합쳐진 결과를 넣을 것
+
+string3= string1+string2
+
+My life is mine.
+0123456789012345
+6543210987654321-
+
+string3 에서 My life를 추출해 볼 것
+
+string3[:7]
+
+string3 에서 mine 을 추출해서 string4에 넣을 것
+
+stirng4=string3[11:15] or string3[-5:-1]
+
+
+-------------------------------------------------
+
+
+"Your life is yours" 의 출력을
+
+---------------
+
+Your life is
+yours 
+
+---------------
+
+가 되도록 할 것
+
+print(""Your life \nis yours")
+print('''Your life 
+is yours''')
+
+
+==============================================================
+
+문자열 포맷팅 실습(% 를 이용한 문자열 포맷팅)
+
+"나는 아침마다 1잔의 우유를 마시고 네이버뉴스를 봅니다." 에서 1과 네이버뉴스를 포맷팅을 이용해서 작성해보시오.
+
+"나는 아침마다 %d잔의 우유를 마시고 %s를 봅니다."%(1,'네이버뉴스)
+
+'hello'문자열을 총 14칸으로 설정하고 왼쪽 붙임으로 포맷팅을 이용해서 작성해보시오.
+
+'%-14s'%'hello'
+
+'bye' 문자열을 총 10칸으로 설정하고 오른쪽 붙임으로 포맷팅을 이용해서 작성해보시오.
+
+'%10s'%'bye'
+
+2.5679856 라는 소수를 소수점 5자리까지만 출력되도록 포맷팅을 이용해서 작성해보시오.
+
+'%.5f'%2.5679856
+
+총 15칸으로 설정하고 소수점 3자리리까지만 출력되도록 포맷팅을 이용해서 작성해보시오.
+
+'%15.3f'%2.5679856
+
+==============================================================
+
+문자열 함수 실습
+
+string1 = "My life is mine."
+
+string1을 소문자를 모두 대문자로 변환한 값을 string2로 만드시오.
+
+string2=string1.upper()
+
+string2을 대문자를 모두 소문자로 변환한 값을 string3로 만드시오.
+
+string3=string1.lower()
+
+string1을 소문자는 대문자로, 대문자는 소문자로 변환한 값을 string4로 만드시오.
+
+string4=string1.swapcase()
+
+string2에서 m의 갯수는?
+
+string2.count('m')
+
+string3에서 M 이 처음으로 나오는 자리는?
+
+string3.index('M')
+or
+string3.find("M")
+
+12345 사이에 ; 으로 구분자를 만드시오.
+
+';'.join('12345')
+
+string1에서 My를 Your로 변환시켜서 string4에 넣으시오.
+
+string4=string1.replace('My',"Your")
+
+"192.168.100.40" 을 리스트 형태로 만들어보시오.
+
+"192.168.100.40".split('.')
+
+"abcdef"를 리스트 형태['a','b','c','d','e','f']로 만들어보시오
+
+','.join("abcdef").split(',')
+
+or
+
+' '.join("abcdef").split()
+
+or
+
+list("abcdef")
+
+==============================================================
+
+list 실습
+
+number=[1,2,3,4,5,6,7,8,9,10]
+
+alpha=['a','b','c','d','e']
+
+number 와 alpha 를 합쳐서 numalp 리스트 생성
+
+numalp=number+alpha
+
+numalp 리스트에서
+
+9번째 부터 11번째 까지 삭제할 것
+8          10
+numalp[8:11]=[]
+
+8번째에 [11,12,13] 리스트 형태로 추가 할 것
+7
+numalp.insert(7,[11,12,13])
+
+1,2,3 번째 자리에 구성요소를 21,22,23 으로 교체 할 것
+0 1 2
+numalp[:3]=[21,22,23]
+
+numalp 리스트 끝에 100 추가 할 것
+
+numalp.append(100)
+
+number 리스트에서 모든 구성요소 모두 삭제 할 것
+
+number[:]=[]
+
+numalp 리스트를 순서대로 정렬해볼 것
+
+numalp.sort()
+에러 : 여러가지 자료형이 구성요소이기 때문에 불가능
+
+numalp 리스트의 순서를 거꾸로 바꿔볼 것
+
+numalp.reverse()
+
+['ㄱ','ㄴ','ㄷ'] 리스트를 2번째와 3번째 사이에 넣을 것
+                          1       2
+numalp.insert(2,['ㄱ','ㄴ','ㄷ'])
+
+['ㄱ', 'ㄴ','ㄷ'] 을 뽑는 형태로 제거 할 것
+
+numalp.pop(numalp.index(['ㄱ','ㄴ','ㄷ']))
+
+numalp 리스트의 순서를 거꾸로 바꿔서 numalp1을 만들어보시오.(단, 기존과 다른 방법=> reverse()를 이용하지 말고 (hint:for))
+
+numalp1=[]
+
+for i in numalp:
+	numalp1.insert(0,i)
+
+print(numalp1)
+
+or
+
+numalp2=[]
+f1=0
+
+while f1==0:
+	numalp2.append(numalp.pop())
+	if numalp == []:
+		f1=1
+
+print(numalp2)
+
+
+alpha 리스트를 3번 곱해서 alpha3을 만들고 해당 리스트를 이용해서 문자열 "aaabbbcccdddeee"를 만들어 보시오.
+
+
+alpha3=alpha * 3
+string1=""
+
+alpha3.sort()
+
+for i in alpha3:
+	string1=string1+i
+
+
+print(string1)
