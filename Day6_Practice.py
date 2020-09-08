@@ -287,9 +287,8 @@ while True:
         dict1['전화번호'] = phone()
         dict1['지역'] = input("지역 :\t")
         user_list.append(dict1)
-        for i in dict1.values():
-            f3.write("{},".format(str(i)))
-        f3.write("\n")
+        with open('user_info.txt', 'a') as f3:
+            f3.write("{}, {}, {}, {}, {}, {}\n".format(dict1['이름'], dict1['성별'], dict1['생년월일'], dict1['나이'], dict1['전화번호'], dict1['지역']))
         print(user_list)
     
     if choice == '2':
