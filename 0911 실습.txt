@@ -1,0 +1,329 @@
+﻿
+=========================================================
+
+모듈 실습
+
+해당 내용의 파이썬 파일을 C:\doit1 생성 후에 저장하시오.
+
+#fourcal.py
+
+def numfind():
+	while True:
+		num=input("number : ")
+		a=0
+		for c in num:
+			if c not in "0123456789.":
+				print("숫자로 다시 입력해주세요")
+				a=a+1
+				break
+			elif num.count('.') > 1:
+				print("숫자로 다시 입력해주세요")
+		if a==0:
+			
+			if num.count('.') ==1:
+				return float(num)
+			else:
+				return int(num)	
+
+
+def add(a,b,c):
+	return a+b+c
+
+def sub(a,b,c):
+	return a-b-c
+
+def mul(a,b,c):
+	return a*b*c
+
+def div(a,b,c):
+	return a/b/c
+
+
+print(add(1,2,3))
+print(sub(1,2,3))
+print(mul(1,2,3))
+print(div(1,2,3))
+
+1) #moduletest1.py 생성
+   fourcal 모듈의 numfind, add, mul 함수만 import 시켜서 해당 내용을 코딩하시오.
+
+계산기
+A.계산하기
+B.나가기
+
+A 실행시
+
+example)
+1번째 숫자: 11
+2번째 숫자: 22
+3번째 숫자: 33 
+기호: +
+
+11 + 22 + 33 = 66
+
+import sys
+
+sys.path.append("c:\\doit1")
+
+from fourcal import numfind,add,mul
+
+
+while True:
+    numlist=[]
+    choice=input('''
+계산기
+A.계산하기
+B.나가기
+
+항목 선택 : ''')    
+    if choice == 'B' or choice == 'b' or choice == 'ㅠ':
+        break
+    for i in range(0,3):
+        print("{} 번째".format(i+1),end=" ")
+        numlist.append(numfind())
+    cal=input("기호 : ")
+    print("")
+    if cal == "+":
+        result=add(numlist[0],numlist[1],numlist[2])
+        print("{}+{}+{}={}".format(numlist[0],numlist[1],numlist[2],result))
+    if cal == "*":
+        result=mul(numlist[0],numlist[1],numlist[2])
+        print("{}x{}x{}x{}".format(numlist[0],numlist[1],numlist[2],result))
+    
+
+2) #moduletest2.py 생성
+fourcal 모듈을 import 시켜서 해당 내용을 코딩하되 fourcal 모듈 실행시 나오는 출력값이 나오지 않도록 fourcal 모듈을 수정 하고 해당 결과 값이 나오도록하시오.
+
+5/2/3 의 결과값
+5-3-3 의 결과값
+
+#fourcal.py
+
+.
+.
+.(기존 내용)
+
+if __name__ == "__main__":
+	print(add(1,2,3))
+	print(sub(1,2,3))
+	print(mul(1,2,3))
+	print(div(1,2,3))
+
+#moduletest2.py
+
+import sys
+
+sys.path.append("c:\\doit1")
+
+import forcal
+
+print(div(5,2,3))
+
+print(sub(5,3,3))
+
+
+3) #fourcal.py를 복사해서 fourcal1.py를 만들고 그 안에 class Morefourcal을 만들어 Morefourcal 클래스 안에 자승을 연산하는 메서드 생성
+   #modeultest1.py를 수정해서 자승이 연산되도록 하시오.
+
+  
+.
+.기존 내용
+.
+.
+class Morefourcal:
+
+    def __init__(self,num1,num2,num3):
+        self.num1=num1
+        self.num2=num2
+        self.num3=num3
+
+    def dublemul(self):
+        result=self.num1**self.num2
+        return result**self.num3
+
+#moduletest1.py => moduletest3.py
+
+import fourcal1
+
+while True:
+    numlist=[]
+    choice=input('''
+계산기
+A.계산하기
+B.나가기
+
+항목 선택 : ''')    
+    if choice == 'B' or choice == 'b' or choice == 'ㅠ':
+        break
+    for i in range(0,3):
+        print("{} 번째".format(i+1),end=" ")
+        numlist.append(fourcal1.numfind())
+    cal=input("기호 : ")
+    print("")
+    if cal == "+":
+        result=fourcal1.add(numlist[0],numlist[1],numlist[2])
+        print("{}+{}+{}={}".format(numlist[0],numlist[1],numlist[2],result))
+    if cal == "*":
+        result=fourcal1.mul(numlist[0],numlist[1],numlist[2])
+        print("{}x{}x{}={}".format(numlist[0],numlist[1],numlist[2],result))
+    if cal == "**":
+        a=fourcal1.Morefourcal(numlist[0],numlist[1],numlist[2])
+        result=a.dublemul()
+        print("({}**{})**{}={}".format(numlist[0],numlist[1],numlist[2],result)) 
+    
+    
+
+------------------------------------------------------------------------
+
+C:\doit1 폴더 생성 후 폴더 안에
+
+A/AA/AAA
+
+폴더 생성
+
+A폴더 안에 
+
+#B.py
+
+a="B.py의 a변수"
+b="B.py의 b변수"
+
+
+AA폴더 안에
+
+#BB.py
+
+def bb_print(a,b):
+	print(a)
+	print(b)
+
+AAA폴더 안에
+
+#BBB.py
+
+print(bb_print(a,b))
+
+
+BBB.py 실행결과가 다음과 같이 나오도록 설정하시오.
+
+=>"B.py의 a변수"
+  "B.py의 b변수"
+
+#BBB.py
+import A.B,A.AA.BB
+
+print(A.AA.BB.bb_print(A.B.a,A.B.b))
+
+or
+
+import A.B as AB
+import A.AA.BB as ABB
+
+print(ABB.bb_print(AB.a,AB.b))
+
+=========================================================
+
+예외처리 실습
+
+1.어떠한 오류가 발생하든지 간에 "오류가 발생하였습니다."가 출력 되도록 하시오.
+
+예제) 
+실행
+a={"a":1,"b":3,"c":5}
+print(a["d"])
+
+결과
+"오류가 발생하였습니다."
+
+
+try:
+	a={"a":1,"b":3,"c":5}
+	print(a["d"])
+
+except:
+	print("오류가 발생하였습니다.")
+
+	
+
+2.분모가 0일때 오류 말고 "분모가 0 입니다."가 출력 되도록 하시오.
+
+try:
+	print(5/0)
+
+except ZeroDivisionError:
+	print("분모가 0입니다.")
+
+3.변수 선언을 하지 않은 변수를 사용할 경우 "존재하지 않는 변수입니다."가 출력되도록 하시오.
+
+try:
+
+	print(a)
+
+except NameError:
+
+	print("존재하지 않는 변수입니다.")
+
+4.1번과 2번 오류를 동시에 예외처리해서 "다시 코딩하시오."를 출력되도록 하시오.
+
+try:
+
+	print(5/0)
+	print(a)
+
+except(ZeroDivisionError,NameError):
+
+	print("다시 코딩하시오")
+
+
+5.3번 오류의 오류 메세지가 출력되도록 하시오.
+
+try:
+
+	print(a)
+
+except NameError as e:
+	
+	print(e)
+
+6.test.txt 파일이 쓰기모드로 열었을 경우 에러가 발생하더라도 파일 닫기가 되도록 하시오.
+
+f=open("test.txt",'r')
+
+try:
+
+	print(a)
+
+finally:
+	f.close()
+
+
+7.class Test 구현하고 자식 클래스 Test1에 test() 라는 함수를 무조건 정의해야지만 오류가 발생하지 않도록 하시오.
+
+class Test:
+	def test(self):
+		raise NotImplementedError
+
+class Test1(Test):
+	def test(self):
+		print("Test1의 함수입니다.")
+
+a=Test1()
+a.test()
+
+8.변수값으로 'A'를 입력할 경우 오류가 발생되서 "'A'를 입력하지마시오." 오류 메세지가 발생하도록 하시오.
+
+class MyError(Exception):
+
+	def __str__(self):
+		return "'A'를 입력하지 마시오."
+
+try:
+	string=input("string을 입력하시오. : ")
+	if 'A' in string:
+		raise MyError()
+	else:
+		print(string)
+
+except MyError as e:
+	print(e)
+========================================================

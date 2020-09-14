@@ -1,0 +1,464 @@
+﻿========================================================
+
+클래스 실습
+
+메뉴
+
+A.차량등록
+B.차주검색
+
+차량등록
+
+차주 :
+색깔 : 
+차종 :(sports,suv,truck 중 택일)
+차량스펙은 자동으로 입력
+
+          sports   suv      truck  
+배기량    5000cc   3000cc   6000cc
+구동      후륜     4륜      4륜
+최고속도  300km/h  200km/h  200km/h
+
+차주검색
+
+ex)
+차주 검색 : 
+차량주인 : XXX
+차량색깔 : XX
+차종 : sports
+배기량 : 5000cc
+구동 : 후륜
+최고속도 : 500km
+
+
+class Car:
+    def __init__(self,name,color,car_value):
+        self.name=name
+        self.color=color
+        self.car_value=car_value
+
+class Sports(Car):
+    cc='5000cc'
+    action='후륜'
+    speed='300km/h'
+    
+    def car_info(self,**car):
+        return car
+    
+class Suv(Car):
+    cc='3000cc'
+    action='4륜'
+    speed='200km'
+    
+    def car_info(self,**car):
+        return car
+
+class Truck(Car):
+    cc='6000cc'
+    action='4륜'
+    speed='200km/h'
+
+    def car_info(self,**car):
+        return car
+
+car_info_list=[]
+        
+while True:
+    menu1=input("""
+차량등록
+A.차량등록
+B.차주검색
+C.나가기
+
+항목을 선택하시오. : """)
+    print("")
+    if menu1 == 'C' or menu1 == 'c':
+        break
+    while True:
+        if menu1 == 'A' or menu1 == 'a':
+            name=input("차주 : ")
+            color=input("색깔 : ")
+            
+            while True:
+                car_value=input("차종 : ")
+                if car_value == 'sports':
+                    sports=Sports(name,color,car_value)
+                    car_info_list.append(sports.car_info(차주=sports.name,색깔=sports.color,차종=sports.car_value,출력=sports.cc,구동=sports.action,최고속도=sports.speed))
+                    
+                elif car_value == 'suv':
+                    suv=Suv(name,color,car_value)
+                    car_info_list.append(suv.car_info(차주=suv.name,색깔=suv.color,차종=suv.car_value,출력=suv.cc,구동=suv.action,최고속도=suv.speed))
+                
+                elif car_value == 'truck':
+                    truck=Truck(name,color,car_value)
+                    car_info_list.append(truck.car_info(차주=truck.name,색깔=truck.color,차종=truck.car_value,출력=truck.cc,구동=truck.action,최고속도=truck.speed))
+                
+                else:
+                    print("\n다시 차종을 선택하세요\n")
+                    continue
+
+                break    
+            print(car_info_list)
+            break    
+
+        else:
+            name1=input("차주 검색 : ")
+            print("")
+            for info_dic in car_info_list:
+                if name1 in list(info_dic.values()):
+                    for i,j in info_dic.items():
+                        print("{}:{}".format(i,j))
+                    break
+                
+            break    
+
+
+============================================================================
+
+모듈 실습
+
+어제 클래스 실습 두번째 문제에서 함수와 클래스 부분을 모듈로 만들고 모듈을 실행하는 식으로 본문 코드를 수정해보시오.
+
+원본 코드
+
+def numfind(i):
+    while True:
+        num=input("number{} : ".format(i))
+        a=0
+        for c in num:
+            if c not in "0123456789.":
+                print("숫자로 다시 입력해주세요")
+                a=1
+                break
+            elif num.count('.') > 1:
+                print("숫자로 다시 입력해주세요")
+                a=1
+                break
+        if a==1:
+            continue
+        if num.count('.') ==1:
+            return float(num)
+        else:
+            return int(num)
+
+        
+
+class Fourcal:
+    def __init__(self,num1,num2,cal):
+        self.num1=num1
+        self.num2=num2
+        self.cal=cal
+        self.result=0
+        
+    
+    def fourcal(self):
+        if self.cal == '+':
+            self.result=self.num1+self.num2
+            print("{}{}{}={}".format(self.num1,self.cal,self.num2,self.result))
+    
+        if self.cal == '-':
+            self.result=self.num1-self.num2
+            print("{}{}{}={}".format(self.num1,self.cal,self.num2,self.result))
+            
+        if self.cal == '*':
+            self.result=self.num1*self.num2
+            print("{}{}{}={}".format(self.num1,self.cal,self.num2,self.result))
+
+    def div(self):
+        if self.cal == '/':
+            self.result=self.num1/self.num2
+            print("{}{}{}={}".format(self.num1,self.cal,self.num2,self.result))
+    
+
+class safeFourcal(Fourcal):
+        
+    def div(self):
+        if self.num2==0:
+            self.result=0
+            print("분모가 0입니다.")
+            
+        else:
+            self.result=self.num1/self.num2
+            print("{}{}{}={}".format(self.num1,self.cal,self.num2,self.result))
+            
+while True:
+    menu1=input('''메뉴
+1.계산하기
+2.각 계산기의 마지막 결과 확인
+3.나가기
+
+선택하시오. : ''')
+    print("")
+    if menu1 == '3':
+        break
+    while True:
+        if menu1 =='1':
+            calnum = input('계산기를 선택하시오.(1,2,3,4,5 중에서 선택): ')
+            i=1
+            num1 = numfind(i)
+            num2 = numfind(i+1)
+            cal=input("기호 : ")
+            if calnum == '1':
+                a1=safeFourcal(num1,num2,cal)
+                if a1.cal == '/':
+                    a1.div()
+                else:
+                    a1.fourcal()
+                                    
+            if calnum == '2':
+                a2=safeFourcal(num1,num2,cal)
+                if a2.cal == '/':
+                    a2.div()
+                else:
+                    a2.fourcal()
+                
+            if calnum == '3':
+                a3=safeFourcal(num1,num2,cal)
+                if a3.cal == '/':
+                    a3.div()
+                else:
+                    a3.fourcal()
+               
+            if calnum == '4':
+                a4=safeFourcal(num1,num2,cal)
+                if a4.cal == '/':
+                    a4.div()
+                else:
+                    a4.fourcal()
+                
+            if calnum == '5':
+                a5=safeFourcal(num1,num2,cal)
+                if a5.cal == '/':
+                    a5.div()
+                else:
+                    a5.fourcal()
+
+            print("")        
+            break
+        else:
+            calnum = input('계산기를 선택하시오.(1,2,3,4,5 중에서 선택): ')
+            print("")
+            if calnum == '1':
+                print("{}번 계산기의 마지막 값은 {} 입니다.".format(calnum,a1.result))
+
+            if calnum == '2':
+                print("{}번 계산기의 마지막 값은 {} 입니다.".format(calnum,a2.result))                
+            if calnum == '3':
+                print("{}번 계산기의 마지막 값은 {} 입니다.".format(calnum,a3.result))               
+            if calnum == '4':
+                print("{}번 계산기의 마지막 값은 {} 입니다.".format(calnum,a4.result))                
+            if calnum == '5':
+                print("{}번 계산기의 마지막 값은 {} 입니다.".format(calnum,a5.result))
+            print("")    
+            break    
+
+
+
+본문 cal.py(문서)
+
+
+모듈 calsub.py(C:\doit)
+
+
+
+#calsub.py
+
+def numfind():
+	while True:
+		num=input("number : ")
+		a=0
+		for c in num:
+			if c not in "0123456789.":
+				print("숫자로 다시 입력해주세요")
+				a=a+1
+				break
+			elif num.count('.') > 1:
+				print("숫자로 다시 입력해주세요")
+				a=a+1
+				break
+		if num.count('.') ==1:
+			return float(num)
+		else:
+			return int(num)
+        
+
+class Fourcal:
+    def __init__(self,num1,num2,cal):
+        self.num1=num1
+        self.num2=num2
+        self.cal=cal
+        self.result=0
+        
+    def fourcal(self):
+        if self.cal == '+':
+            self.result=self.num1+self.num2
+            print("{}{}{}={}".format(self.num1,self.cal,self.num2,self.result))
+    
+        if self.cal == '-':
+            self.result=self.num1-self.num2
+            print("{}{}{}={}".format(self.num1,self.cal,self.num2,self.result))
+            
+        if self.cal == '*':
+            self.result=self.num1+self.num2
+            print("{}{}{}={}".format(self.num1,self.cal,self.num2,self.result))
+
+    def div(self):
+        if self.cal == '/':
+            self.result=self.num1/self.num2
+            print("{}{}{}={}".format(self.num1,self.cal,self.num2,self.result))
+    
+
+class safeFourcal(Fourcal):
+        
+    def div(self):
+        if self.num2==0:
+            self.result=0
+            print("분모가 0입니다.")
+            
+        else:
+            self.result=self.num1/self.num2
+            print("{}{}{}={}".format(self.num1,self.cal,self.num2,self.result))
+----------------------------------------------------------------------------------
+#cal.py
+
+import sys
+
+sys.path.append("c:\\doit")
+
+import calsub
+
+while True:
+    menu1=input('''메뉴
+1.계산하기
+2.각 계산기의 마지막 결과 확인
+3.나가기
+
+선택하시오. : ''')
+    print("")
+    if menu1 == '3':
+        break
+    while True:
+        if menu1 =='1':
+            calnum = input('계산기를 선택하시오.(1,2,3,4,5 중에서 선택): ')
+            num1 = calsub.numfind()
+            num2 = calsub.numfind()
+            cal=input("기호 : ")
+            if calnum == '1':
+                a1=calsub.safeFourcal(num1,num2,cal)
+                if a1.cal == '/':
+                    a1.div()
+                else:
+                    a1.fourcal()
+                                    
+            if calnum == '2':
+                a2=calsub.safeFourcal(num1,num2,cal)
+                if a2.cal == '/':
+                    a2.div()
+                else:
+                    a2.fourcal()
+                
+            if calnum == '3':
+                a3=calsub.safeFourcal(num1,num2,cal)
+                if a3.cal == '/':
+                    a3.div()
+                else:
+                    a3.fourcal()
+               
+            if calnum == '4':
+                a4=calsub.safeFourcal(num1,num2,cal)
+                if a4.cal == '/':
+                    a4.div()
+                else:
+                    a4.fourcal()
+                
+            if calnum == '5':
+                a5=calsub.safeFourcal(num1,num2,cal)
+                if a5.cal == '/':
+                    a5.div()
+                else:
+                    a5.fourcal()
+
+            print("")        
+            break
+        else:
+            calnum = input('계산기를 선택하시오.(1,2,3,4,5 중에서 선택): ')
+            print("")
+            if calnum == '1':
+                print("{}번 계산기의 마지막 값은 {} 입니다.".format(calnum,a1.result))
+
+            if calnum == '2':
+                print("{}번 계산기의 마지막 값은 {} 입니다.".format(calnum,a2.result))                
+            if calnum == '3':
+                print("{}번 계산기의 마지막 값은 {} 입니다.".format(calnum,a3.result))               
+            if calnum == '4':
+                print("{}번 계산기의 마지막 값은 {} 입니다.".format(calnum,a4.result))                
+            if calnum == '5':
+                print("{}번 계산기의 마지막 값은 {} 입니다.".format(calnum,a5.result))
+            print("")    
+            break    
+
+
+
+
+------------------------------------------------------------------------
+doit 안에 
+
+sound / balad
+      / dance
+      / trot
+폴더를 만들고
+
+sound 폴더 안에
+
+#sound1.py
+
+def sount_print():
+	print("sound test")
+
+balad_print()
+dance_print()
+trot_print()
+
+balad 폴더 안에
+
+#balad1.py
+
+def balad_print():
+	print("balad song")
+	dance_print()
+
+dance 폴더 안에
+
+#dance1.py
+
+def dance_print():
+	print("dance song")
+
+trot 폴더 안에
+
+#trot1.py
+
+def trot_print():
+	print("trot song")
+
+실행되도록 패키지 설정을 하시오.
+
+-------------------------------------------
+c:\>set PYTHONPATH=c:\doit
+
+#sound1.py
+from sound.balad.balad1 import balad_print
+from sound.dance.dance1 import dance_print
+from sound.trot.trot1 import trot_print
+def sount_print():
+	print("sound test")
+
+balad_print()
+dance_print()
+trot_print()
+------------------------------------
+#balad1.py
+from sound.dance.dance1 import dance_print
+def balad_print():
+	print("balad song")
+	dance_print()

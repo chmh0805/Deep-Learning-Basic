@@ -1,0 +1,498 @@
+﻿입출력 실습
+
+시험성적 입력 프로그램 코딩
+
+시험 종류 : 1학기중간, 1학기기말, 2학기중간, 2학기기말
+
+과목 : 입력하고자 하는 과목 생성(국어, 영어, 수학 외에 2개 추가)
+
+example)
+
+입력할 시험 종류 입력 : 1학기중간
+
+입력할 과목 : 국어
+성적 : 90
+추가로 입력하시겠습니까?(y or n) : y
+
+입력할 과목 : 영어
+성적 : 80
+추가로 입력하시겠습니까?(y or n) : y
+.
+.
+.
+.
+
+----------------------------------------------
+
+exam.txt 안에 아래와 같이 되도록 저장할 것.
+
+시험 국어 영어 수학 물리 화학 
+1학기중간 90 60 70 80 75
+1학기기말 85 80 50 80 60
+2학기중간 .....
+2학기기말 .....
+
+
+
+studys=[]
+scores=[]
+i=0
+
+f1=open("exam.txt",'w')
+
+while True:
+    exam=input("입력할 시험종류:")
+    while True:
+        study=input("입력할 과목:")
+        print("")
+        score=input("성적:")
+        print("")
+        studys.append(study)
+        scores.append(score)
+        q1=input("추가로 과목을 입력하시겠습니까?(y or n):")
+        print("")
+        if q1 == 'y'or q1 == 'ㅛ':
+            continue
+        else:
+            break
+    if i==0:
+        f1.write("시험 ")
+        for study1 in studys:
+            data2="{} ".format(study1)
+            f1.write(data2)
+        i=i+1
+        f1.write("\n")
+                    
+    f1.write("{} ".format(exam))
+    for score1 in scores:
+        data2="{} ".format(score1)
+        f1.write(data2)
+    f1.write("\n")
+    studys=[]
+    scores=[]
+    q2=input("추가로 시험을 입력하시겠습니까?(y or n):")
+    print("")
+    if q2 == 'y'or q2 == 'ㅛ':
+        continue
+    else:
+        break
+f1.close()    
+----------------------------------------------
+
+exam.txt 파일을 읽어드려서 아래와 같이 결과를 볼 수 있도록 코딩하시오.
+
+성적확인
+
+1.시험별 성적
+2.시험별 평균
+3.과목별 점수
+
+1.시험별 성적확인
+확인하고자 하는 시험은 ? 1학기중간
+
+국어: XX
+영어: XX
+수학: XX
+물리: XX
+화학: XX
+
+2.시험별 평균
+평균을 내고자하는 시험은 ? 1학기중간
+
+1학기중간의 평균은 XX 입니다.
+
+3.과목별 점수
+검색하고자하는 과목:수학
+
+1학기중간:XX
+1학기기말:XX
+2학기중간:XX
+2학기기말:XX
+
+f=open("exam.txt",'r')
+lines=f.readlines()
+i=0
+list1=lines[0].split()
+menu='''
+성적확인
+
+1.시험별 성적
+2.시험별 평균
+3.과목별 점수
+4.나가기
+
+항목을 선택하세요.:'''
+
+while True:
+    j=0
+    choice=input(menu)
+    if choice == '4':
+        break
+    while True:
+        if choice == '1':
+            exam = input("검색할 시험은?:")
+            for exam1 in lines:
+                if exam1.find(exam) >= 0:
+                    list2=exam1.split()
+                    for i in range(1,len(list2)):
+                        print("{}:{}".format(list1[i],list2[i]))
+            j=j+1
+            if j!=0:
+                break
+        if choice == '2':
+            exam = input("검색할 시험은?:")
+            num=0
+            for exam1 in lines:
+                if exam1.find(exam) >= 0:
+                    list2=exam1.split()
+                    for i in range(1,len(list2)):
+                        num=num+int(list2[i])
+                    avg=num/(len(list2)-1)
+                    print("{}의 평균은 {} 입니다.".format(exam,avg))
+            j=j+1
+            if j!=0:
+                break
+        if choice == '3':
+            study = input("검색할 과목은?:")
+            for i in range(1,len(lines)):
+                exam_list=lines[i].split()
+                print("{}:{}".format(exam_list[0],exam_list[list1.index(study)]))
+            j=j+1
+            if j!=0:
+                break
+    
+
+
+===========================================================================
+
+클래스 실습
+
+게임 케릭들을 만들어보시오.
+
+1. 힘,민첩,지능 수치를 입력하도록 하시오. (힘,민첩,지능 합이 30이 넘지 않도록 할 것)
+
+2. 직업을 힘,민첩,지능 중 힘이 많으면 전사, 민첩이 많으면 도적, 지능이 많으면 마법사 정해지도록 할 것
+
+3. 전사로 선택되면 베기,찌르기,대쉬 중에서 스킬을 선택하도록 하고
+   도적으로 선택되면 암살,은신,훔치기 중에서 스킬을 선택하도록 하고
+   마법사로 선택되면 불,물,바람 중에서 스킬을 선택하도록 하시오.
+
+#case1
+
+class Cha:
+    def __init__(self,st,dex,inte):
+        self.st=st
+        self.dex=dex
+        self.inte=inte
+
+    def state_define(self):
+        if self.st+self.dex+self.inte==30:
+            return 1
+        else:
+            return 0
+
+    def cha_state(self):
+        if self.st > self.dex and self.st > self.inte:
+            job = '전사'
+        elif self.dex > self.st and self.dex > self.inte:
+            job = '도적'
+        else:
+            job = '마법사'
+        return job
+
+class Skill(Cha):
+    def skill(self,job):
+        if job == '전사':
+            skill1='베기'
+            skill2='찌르기'
+            skill3='대쉬'
+        if job == '도적':
+            skill1='암살'
+            skill2='은신'
+            skill3='훔치기'
+        else:
+            skill1='불'
+            skill2='물'
+            skill3='바람'
+        
+        skillchoice=input('''
+다음중에서 스킬을 선택하세요.
+1.{}
+2.{}
+3.{}
+선택하세요 : '''.format(skill1,skill2,skill3))
+        if skillchoice == '1':
+            return skill1
+        if skillchoice == '2':
+            return skill2
+        else:
+            return skill3
+cha_name=input("케릭명을 적으시오.:")    
+while True:
+    st=int(input("원하는 힘을 적으시오. : "))
+    dex=int(input("원하는 민첩을 적으시오. : "))
+    inte=int(input("원하는 지능을 적으시오. : "))
+    choice=Skill(st,dex,inte)
+    i=choice.state_define()
+    if i == 1:
+        break
+    else:
+        print("다시 스테이트를 정해주세요.")
+        continue
+        
+job=choice.cha_state()
+skills=choice.skill(job)
+
+print('''
+케릭명:{}
+직업:{}
+힘:{}
+민첩:{}
+지능:{}
+스킬:{}
+'''.format(cha_name,job,st,dex,inte,skills))
+
+
+#case2
+
+
+def state_define(st,dex,inte):
+    if st+dex+inte==30:
+        if st > dex and st > inte:
+            return 1
+        elif dex > st and dex > inte:
+            return 1
+        elif inte > dex and inte > st:
+            return 1
+        else:
+            return 0
+    else:
+        return 0
+
+def cha_state(st,dex,inte):
+    if st > dex and st > inte:
+        job = '전사'
+    elif dex > st and dex > inte:
+        job = '도적'
+    else:
+        job = '마법사'
+    return job
+
+
+
+class Cha:
+    
+    def skillchoice(self,skills):
+        skillchoice=input('''
+다음중에서 스킬을 선택하세요.
+1.{}
+2.{}
+3.{}
+선택하세요 : '''.format(skills[0],skills[1],skills[2]))
+        if skillchoice == '1':
+            return skills[0]
+        elif skillchoice == '2':
+            return skills[1]
+        else:
+            return skills[2]
+
+class Knight(Cha):
+    skills=['베기','찌르기','대쉬']  
+
+class Thief(Cha):
+    skills=['암살','은신','훔치기']
+        
+class Wizard(Cha):
+    skills=['불','물','바람']
+        
+cha_name=input("케릭명을 적으시오.:")    
+while True:
+    st=int(input("원하는 힘을 적으시오. : "))
+    dex=int(input("원하는 민첩을 적으시오. : "))
+    inte=int(input("원하는 지능을 적으시오. : "))
+    i=state_define(st,dex,inte)
+    if i == 1:
+        break
+    else:
+        print("다시 스테이트를 정해주세요.")
+        continue
+job=cha_state(st,dex,inte)
+if job=='전사':
+    knight=Knight()
+    skill_list=knight.skills
+    skill=knight.skillchoice(skill_list)
+if job=='도적':
+    thief=Thief()
+    skill_list=Thief.skills
+    skill=Thief.skillchoice(skill_list)
+if job=='마법사':
+    wizard=Wizard()
+    skill_list=wizard.skills
+    skill=wizard.skillchoice(skill_list)
+    
+print('''
+케릭명:{}
+직업:{}
+힘:{}
+민첩:{}
+지능:{}
+스킬:{}
+'''.format(cha_name,job,st,dex,inte,skill))
+
+
+-----------------------------------------------------------------------
+
+4칙연사 계산기 5대 운영(1,2,3,4,5)
+
+메뉴
+1.계산하기
+2.각 계산기의 마지막 결과 확인
+
+1.계산하기
+
+계산기선택:(1,2,3,4,5 중에 택일)
+
+num1:
+num2:
+기호: 
+(정수와 실수외에는 입력이 되지않도록 설정)
+나누기 같은 경우에는 자식 클래스를 만들어서 분모가 0일 때 결과값이 0이 되도록 메소트 오버라이드 할 것
+
+2. 각 계산기의 마지막 결과 확인
+
+계산기선택:(1,2,3,4,5 중에 택일)
+
+def numfind(i):
+    while True:
+        num=input("number{} : ".format(i))
+        a=0
+        for c in num:
+            if c not in "0123456789.":
+                print("숫자로 다시 입력해주세요")
+                a=1
+                break
+            elif num.count('.') > 1:
+                print("숫자로 다시 입력해주세요")
+                a=1
+                break
+        if a==1:
+            continue
+        if num.count('.') ==1:
+            return float(num)
+        else:
+            return int(num)
+
+        
+
+class Fourcal:
+    def __init__(self,num1,num2,cal):
+        self.num1=num1
+        self.num2=num2
+        self.cal=cal
+        self.result=0
+        
+    
+    def fourcal(self):
+        if self.cal == '+':
+            self.result=self.num1+self.num2
+            print("{}{}{}={}".format(self.num1,self.cal,self.num2,self.result))
+    
+        if self.cal == '-':
+            self.result=self.num1-self.num2
+            print("{}{}{}={}".format(self.num1,self.cal,self.num2,self.result))
+            
+        if self.cal == '*':
+            self.result=self.num1*self.num2
+            print("{}{}{}={}".format(self.num1,self.cal,self.num2,self.result))
+
+    def div(self):
+        if self.cal == '/':
+            self.result=self.num1/self.num2
+            print("{}{}{}={}".format(self.num1,self.cal,self.num2,self.result))
+    
+
+class safeFourcal(Fourcal):
+        
+    def div(self):
+        if self.num2==0:
+            self.result=0
+            print("분모가 0입니다.")
+            
+        else:
+            self.result=self.num1/self.num2
+            print("{}{}{}={}".format(self.num1,self.cal,self.num2,self.result))
+            
+while True:
+    menu1=input('''메뉴
+1.계산하기
+2.각 계산기의 마지막 결과 확인
+3.나가기
+
+선택하시오. : ''')
+    print("")
+    if menu1 == '3':
+        break
+    while True:
+        if menu1 =='1':
+            calnum = input('계산기를 선택하시오.(1,2,3,4,5 중에서 선택): ')
+            i=1
+            num1 = numfind(i)
+            num2 = numfind(i+1)
+            cal=input("기호 : ")
+            if calnum == '1':
+                a1=safeFourcal(num1,num2,cal)
+                if a1.cal == '/':
+                    a1.div()
+                else:
+                    a1.fourcal()
+                                    
+            if calnum == '2':
+                a2=safeFourcal(num1,num2,cal)
+                if a2.cal == '/':
+                    a2.div()
+                else:
+                    a2.fourcal()
+                
+            if calnum == '3':
+                a3=safeFourcal(num1,num2,cal)
+                if a3.cal == '/':
+                    a3.div()
+                else:
+                    a3.fourcal()
+               
+            if calnum == '4':
+                a4=safeFourcal(num1,num2,cal)
+                if a4.cal == '/':
+                    a4.div()
+                else:
+                    a4.fourcal()
+                
+            if calnum == '5':
+                a5=safeFourcal(num1,num2,cal)
+                if a5.cal == '/':
+                    a5.div()
+                else:
+                    a5.fourcal()
+
+            print("")        
+            break
+        else:
+            calnum = input('계산기를 선택하시오.(1,2,3,4,5 중에서 선택): ')
+            print("")
+            if calnum == '1':
+                print("{}번 계산기의 마지막 값은 {} 입니다.".format(calnum,a1.result))
+
+            if calnum == '2':
+                print("{}번 계산기의 마지막 값은 {} 입니다.".format(calnum,a2.result))                
+            if calnum == '3':
+                print("{}번 계산기의 마지막 값은 {} 입니다.".format(calnum,a3.result))               
+            if calnum == '4':
+                print("{}번 계산기의 마지막 값은 {} 입니다.".format(calnum,a4.result))                
+            if calnum == '5':
+                print("{}번 계산기의 마지막 값은 {} 입니다.".format(calnum,a5.result))
+            print("")    
+            break    
+
+
+
+=======================================================================

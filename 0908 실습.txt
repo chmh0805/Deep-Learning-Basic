@@ -1,0 +1,323 @@
+﻿함수 실습
+
+다음에 있는 명부편집을 코딩해보시오.
+
+명부편집
+1.정보 입력
+2.정보 확인
+3.정보 수정
+4.나가기
+
+1.정보 입력 선택시
+이름 :
+성별 :
+생년월일 : 
+전화번호 : 
+지역 :
+
+
+2.정보 확인
+이름으로 선택 => 함수 설정
+
+이름 : XXX
+
+성별 : 남/여 => 별도로 입력하지 않는한 남으로 되도록 하시오.
+
+나이 : 생년월일 입력시 자동으로 계산되서 입력되도록 할 것(기준 2020년)
+
+생년월일 : XXXX/XX/XX
+=> 어떻게 입력하든 XXXX/XX/XX 로 입력되도록 할 것 (함수 설정)
+   77-02-21 로 입력해도 1977/02/21로 되도록
+
+전화번호 : 010-XXXX-XXXX
+=> 어떻게 입력하든 010-XXXX-XXXX 로 입력되도록 할 것 (함수 설정)
+   010 2222 2222 로 입력했어도 010-2222-2222로 되도록
+
+지역 : XXX
+
+3. 정보 수정 
+이름으로 선택
+
+원하는 항목 선택
+1.생년월일
+2.전화번호
+3.지역
+
+힌트1 - [{'a':1,'b':2},{'a':3,'b':4}]
+힌트2 - 딕셔너리 복사 방법 
+	import copy
+	dic2=dic1.copy()
+
+import copy
+
+
+def name_input(name,se=True):
+    if se==True:
+        se1='male'
+    else:
+        se1=se
+    return name,se1   
+    
+    
+
+def birth_input(birthday):
+    if birthday[2] not in "01234567890":
+        if int(birthday[0]+birthday[1]) <=20:
+            birthday = '20'+birthday
+        else:
+            birthday = '19'+birthday
+    elif len(birthday) == 6:
+        if int(birthday[0]+birthday[1]) <=20:
+            birthday = '20'+birthday
+        else:
+            birthday = '19'+birthday
+    if birthday[4] in "01234567890":
+        save_birth1 = birthday[:4]+'/'+birthday[4:6]+'/'+birthday[6:]
+        return save_birth1
+    elif birthday[4] == "/":
+        return birthday
+    else:
+        save_birth1 = birthday.replace(birthday[4],'/')
+        return save_birth1
+
+def age_input(birthday):
+    age=2020-int(birthday[0:4])+1
+    return age
+    
+def tel_input(tel):
+    if tel[3] in "0123456789":
+        tel_list=list(tel)
+        tel_list.insert(3,'-')
+        tel_list.insert(8,'-')
+        tel1=""
+        for i in tel_list:
+            tel1=tel1+i
+        return tel1
+
+    elif tel[3] != '-':
+        tel1 = tel.replace(tel[3],'-')
+        return tel1
+    else:
+        return tel
+        
+
+def human_find(findname):
+    for i in range(len(human_list)):
+        if findname in human_list[i].values():
+            return i
+        
+
+def add_save():
+    a=input("추가로 수정하시겠습니까?(y or n) : ")
+    if a == 'n' :
+        return 0
+    else:
+        return 1
+
+human_list=[]
+human_list1=[]
+human_dic={}
+
+MENU='''
+명부편집
+1.정보 입력
+2.정보 확인
+3.정보 수정
+4.나가기
+'''
+
+while 1:
+    print(MENU)
+    choice=input("항목을 선택하시오 : ")
+    print("")
+    if choice not in "1234":
+        print("잘못입력하셨습니다. 다시 선택해주세요")
+        continue
+    if choice == '4':
+        print("종료합니다.")
+        break
+    if choice == '1':
+        index1=0
+        index2=1
+        name=input("이름 : ")
+        se=input("성별 : ")
+        if se=="":
+            name,se=name_input(name)
+        else:
+            name,se = name_input(name,se)
+        birthday= birth_input(input("생년월일 : "))
+        age=age_input(birthday)
+        tel=tel_input(input("전화번호 : "))
+        area=input("지역 : ")
+        human_dic['이름']=name
+        human_dic['성별']=se
+        human_dic['생년월일']=birthday
+        human_dic['나이']=age
+        human_dic['전화번호']=tel
+        human_dic['지역']=area
+
+
+	with open('humam.txt','a') as f1:
+		f1.write("{},{},{},{},{}\n".format(name,se,birthday,tel,area))
+
+        human_dic2=human_dic.copy()
+        human_list.append(human_dic2)
+        print("")
+        print(human_list)
+        print("")
+    if choice == '2':
+        findname = human_find(input("이름검색 : "))
+        print("")
+        find_dic=human_list[findname]
+        print("")
+        for i,j in find_dic.items():
+            print("{} : {}".format(i,j))
+        print("")
+    if choice == '3':
+        findname = human_find(input("이름검색 : "))
+        find_dic=human_list[findname]
+        while 1:
+            choice1=input('''
+1.생년월일
+2.전화번호
+3.지역
+
+수정하고자 하는 항목을 적으시오 : ''')
+            print("")
+            if choice1 == '1':
+                save_birth=birth_input(input("생년월일 : "))
+                print("")
+                save_age=age_input(save_birth)
+                find_dic["생년월일"]=save_birth
+                find_dic["나이"]=save_age
+                for i,j in find_dic.items():
+                    print("{} : {}".format(i,j))        
+                a=add_save()
+                if a==0:
+                    break
+                else:
+                    continue
+            if choice1 == '2':
+                save_tel = tel_input(input("전화번호 : "))
+                print("")
+                find_dic["전화번호"]=save_tel
+                for i,j in find_dic.items():
+                    print("{} : {}".format(i,j))        
+                a=add_save()                
+                if a==0:
+                    break
+                else:
+                    continue
+            if choice == '3':
+                save_area = input("지역 : ")
+                print("")
+                find_dic["지역"]=save_area
+                for i,j in find_dic.items():
+                    print("{} : {}".format(i,j))        
+                a=add_save()
+                
+                if a==0:
+                    break
+                else:
+                    continue
+            print("")        
+
+-------------------------------------------------------------------
+
+def test1(list1,list2):
+	list3=[]
+	for i in list1:
+		for j in list2:
+			list3.append(i*j)
+	return list3
+
+를 lambda 로 작성해보시오.
+
+test2=lambda list1,list2: [i*j for i in list1 for j in list2]
+test2([1,2,3],[4,5,6])
+
+-------------------------------------------------------------------
+
+파일 관리 실습
+
+
+1. 구구단을 줄바꾸기를 하지 말고 저장하시오.
+
+with open("gu1.txt",'w') as f1:
+	for i in range(2,10):
+		for j in range(1,10):
+			f1.write("{} ".format(i*j))
+
+
+2. 구구단을 세로로 저장하시오.
+
+with open("gu2.txt",'w') as f1:
+	for i in range(2,10):
+		for j in range(1,10):
+			f1.write("{}\n".format(i*j))
+
+
+
+3. 1번 파일의 내용을 가지고 리스트화 시키시오.
+
+with open("gu1.txt",'r') as f1:
+
+	st1=f1.readline()
+	list1=st1.split()
+
+print(list1)
+
+
+4. 3번에서 리스트화 한 것을 '.'를 구분자로 가진 문자열을 만드시오.
+
+'.'.join(list1)
+
+
+5. 금일 실습한 명부 내용을 이름,성별,생일,전화번호,지역 순으로 계속해서 업데이트 되도록 저장한 후에 파일을 읽어드려서 파일 전체 내용을 리스트화 해서 출력하시오.
+ex)
+이가,남,1990/01/01,010-1111-1111,서울
+김나,여,1991/02/02,010-2222-2222,대구
+이다,남,1992/03/03,010-3333-3333,부산
+박라,남,1993/04/04,010-4444-4444,서울
+
+        human_dic['이름']=name
+        human_dic['성별']=se
+        human_dic['생년월일']=birthday
+        human_dic['나이']=age
+        human_dic['전화번호']=tel
+        human_dic['지역']=area
+
+	with open('humam.txt','a') as f1:
+		f1.write("{},{},{},{},{}\n".format(name,se,birthday,tel,area))
+
+        human_dic2=human_dic.copy()
+        human_list.append(human_dic2)
+        print("")
+        print(human_list)
+        print("")
+
+
+6. 5번에 파일 내용 중에서 지역이 '서울'인 라인만 출력해보시오.(hint:find())
+
+with open("human.txt",'r') as f1:
+	list1=f1.readlines()
+	for i in list1:
+		if '서울' in i:
+			print(i)
+
+	or
+
+	for i in list1:
+		if i.find('서울') >0 :
+			print(i)
+
+
+
+
+
+
+
+
+
+
+

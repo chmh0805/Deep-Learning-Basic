@@ -1,0 +1,479 @@
+﻿문제 1
+
+과일전문 요리점이 있다.
+종류        수량        금액
+사과파이      5         5000
+사과쥬스      2         2000
+사과         1         1000
+
+현재 사과재고는  30개가 있다.
+
+메뉴를 고를 때마다 재고의 해당 메뉴대로 재고가 소진
+해당 금액에 해당하는 금액이상시에만 주문 가능(금액 입력시 숫자 외에 입력하면 재 입력 하도록 할 것)
+금액 제출시 초과 금액은 거스름돈 출력
+해당 재고가 떨어졌으면 "해당 재고가 없습니다."라는 메세지 출력과 함께 "마감합니다." 종료
+
+입력창
+-----------------------------
+종류        금액
+1.사과파이 : 5000
+2.사과쥬스 : 2000
+3.사과    : 1000
+----------------------------
+메뉴를 선택하시오(번호를 누르시오) : 
+돈을 내시오 :
+
+# case 1
+apple = int(input("입고할 사과량을 정하시오 : "))
+money = 0
+MENU='''
+-----------------------------
+종류        금액
+1.사과파이 : 5000
+2.사과쥬스 : 2000
+3.사과     : 1000
+----------------------------
+메뉴를 선택하시오(번호를 누르시오) : '''
+
+
+
+while True :
+	choice = input(MENU)
+
+	if choice not in "123":
+		print("NO MENU\n")
+		continue
+	while True:
+		money=input("\n돈을 내시오 : ")
+		for c in num1:
+			a=1
+			if c not in "0123456789":	
+				print(" 숫자를 입력하지 않았습니다.")
+				a=a-1
+				break
+		if a ==1:
+			money=int(money)
+			break
+
+	if choice == '1':
+		if apple-5 >= 0 :
+			if money==5000:
+				apple = apple - 5
+				print("\n사과파이를 선택하셨습니다.\n\n재고가 {} 남았습니다.\n".format(apple))
+			elif money > 5000:
+				apple = apple - 5
+				print("\n사과파이를 선택하셨습니다.\n\n{}을 거슬러 드립니다.\n재고가 {} 남았습니다.\n".format(money-5000,apple))
+			else:
+				print("\n금액이 부족합니다.다시 선택해주세요.\n\n재고가 {} 남았습니다.\n".format(apple))
+				continue
+		else:
+			print("\n재료가 부족해서 주문 불가합니다.\n\n재고가 {} 남았습니다.\n".format(apple))
+	elif choice == '2':
+		if apple-2 >= 0 :
+				if money==2000:
+					apple = apple - 2
+					print("\n사과쥬스를 선택하셨습니다.\n\n재고가 {} 남았습니다.\n".format(apple))
+				elif money>2000:
+					apple = apple - 2
+					print("\n사과쥬스를 선택하셨습니다.{}을 거슬러 드립니다.\n\n재고가 {} 남았습니다.".format(money-2000,apple))
+				else:
+					print("\n금액이 부족합니다.다시 선택해주세요.\n\n재고가 {} 남았습니다.\n".format(apple))
+					continue
+		else:
+			print("\n재료가 부족해서 주문 불가합니다.\n\n재고가 {} 남았습니다.\n".format(apple))
+	else:
+		if apple-1 >= 0 :
+			if money==1000:
+				apple = apple - 1
+				print("\n사과를 선택하셨습니다.\n\n재고가 {} 남았습니다.\n".format(apple))
+			elif money>1000:
+				apple = apple - 1
+				print("\n사과를 선택하셨습니다.\n\n{}을 거슬러 드립니다.\n\n재고가 {} 남았습니다.\n".format(money-1000,apple))
+			else:
+				print("\n금액이 부족합니다.다시 선택해주세요.\n\n재고가 {} 남았습니다.\n".format(apple))
+				continue
+		else:
+			print("\n재료가 부족해서 주문 불가합니다.\n\n재고가 {} 남았습니다.\n".format(apple))
+	if apple==0:
+		print("\n마감합니다\n")
+		break
+
+# case 2 (딕셔너리 사용)
+
+apple = int(input("입고할 사과량을 정하시오 : "))
+money = 0
+MENU='''
+-----------------------------
+종류        금액
+1.사과파이 : 5000
+2.사과쥬스 : 2000
+3.사과     : 1000
+----------------------------
+메뉴를 선택하시오(번호를 누르시오) : '''
+
+store={'1':(5000,5),'2':(2000,2),'3':(1000,1)}
+
+while apple !=0 :
+	choice=input(MENU)
+	if choice not in store.keys():
+		print("\n잘못선택하셨습니다.")
+		continue
+	use_apple=store[choice][1]
+	sales_money=store[choice][0]
+		
+	if apple < use_apple:
+		print("재고가 부족합니다.\n\n다른 메뉴를 선택해주세요")
+		continue
+	
+	while apple != 0:
+		while True:
+			inmoney=input("\n금액 : ")
+			for c in inmoney:
+				a=1
+				if c not in "0123456789":	
+					print(" 숫자를 입력하지 않았습니다.")
+					a=a-1
+					break
+			if a ==1:
+				inmoney=int(inmoney)
+				break
+
+		if inmoney < sales_money:
+			print("금액이 부족합니다. 다시 금액을 내시오.")
+			continue
+		elif inmoney > sales_money:
+			apple=apple-use_apple
+			money=money+sales_money
+			print("{}을 주문하셨고 {}원을 지불하셨습니다. {}을 거슬러드립니다.\n사과 재고는 {}개 입니다.".format(choice,inmoney,inmoney-sales_money,apple))
+			break
+		else:
+			apple=apple-use_apple
+			money=money+sales_money
+			print("{}을 주문하셨고 {}원을 지불하셨습니다.\n사과 재고는 {}개 입니다.".format(choice,inmoney,apple))
+			break
+	
+	if apple == 0:
+		print("마감합니다. 오늘 매출금액은 {} 입니다.".format(money))
+
+
+
+================================================================================
+
+문제 2
+
+국어:점수
+영어:점수
+수학:점수
+.
+.
+.
+과목과 점수를 입력했을 경우 추가 입력 여부를 물어보고 'y'를 누르면 추가로 입력하고 'n'를 누르면 평균을 내어주도록 작성해보시오.
+
+study_list=[]
+score_list=[]
+score1 = 0
+while True:
+	study=input("과목 : ")
+	score=int(input("점수 : "))
+	answer=input("추가로 입력하시겠습니까?(y or n) : ")
+	study_list.append(study)
+	score_list.append(score)
+	
+	if answer == 'y':
+		pass	
+	else:
+		for stnum in score_list:
+			score1 = score1 + stnum
+		average1=score1/len(score_list)	
+		for i in range(len(score_list)):
+			print("\n%s : %d "%(study_list[i],score_list[i]))
+		print("\n평균 : %d"%average1)
+		break
+
+================================================================================
+
+문제 3
+계산기를 만들어보시오.
+
+출력 결과
+
+-----------------
+메뉴
+1.더하기
+2.빼기
+3.곱하기
+4.나누기
+5.자승
+6.나가기
+-----------------
+
+메뉴에서 옵션 선택 후 숫자 2개를 입력하면 계산 값이 나오도록 할 것.
+
+- 메뉴 항목에서 메뉴 번호 외에 선택하게 되면 다시 선택하도록 할 것
+- 계산될 숫자 입력시 숫자 외에 것을 입력하면 "숫자가 아닙니다. 다시 입력해주세요." 라는 메세지가 뜨도록 해서 숫자로 입력 했을 때만 통과
+
+MENU = """-----------------
+메뉴
+1.더하기
+2.빼기
+3.곱하기
+4.나누기
+5.자승
+6.나가기
+-----------------
+메뉴를 선택하세요. : """
+
+choice = 0
+
+while True:
+	choice = 0
+	num1=num2=0
+	while True:
+		choice=input(MENU)
+		if choice not in "123456":
+			print("잘못 선택하셨습니다. 다시 선택해주세요.")	
+		else:
+			break
+	if choice == '6':
+		print("종료합니다")
+		break
+	while True:
+		num1=input("num1 : ")
+		for c in num1:
+			a=1
+			if c not in "0123456789":	
+				print(" 숫자를 입력하지 않았습니다.")
+				a=a-1
+				break	
+		if a ==1:
+			break
+	while True:
+		num2=input("num2 : ")
+		for c in num2:
+			a=1
+			if c not in "0123456789":
+				print(" 숫자를 입력하지 않았습니다.")
+				a=a-1
+				break	
+		if a ==1:
+			break	
+	numa=int(num1)
+	numb=int(num2)
+	if choice == '1':
+		print("{} 와 {}의 합은 {} 입니다.\n".format(numa,numb,numa+numb))
+	if choice == '2':
+		print("{} 와 {}의 차는 {} 입니다.\n".format(numa,numb,numa-numb))	
+	if choice == '3':
+		print("{} 와 {}의 곱은 {} 입니다.\n".format(numa,numb,numa*numb))
+	if choice == '4':
+		print("{} 에서 {}를 나눈 값은 {} 입니다.\n".format(numa,numb,numa/numb))
+	if choice == '5':
+		print("{} 의 {}승은 {} 입니다.\n".format(numa,numb,numa**numb))
+================================================================================
+
+함수 실습
+
+금일 실습한 문제 중에서 과목과 점수를 입력받아 평균을 구하는 실습 부분에서 
+
+1.함수 :점수 입력시 숫자 외에 것을 입력하면 "숫자가 아닙니다. 다시 입력해주세요." 라는 메세지가 뜨도록 해서 재입력 요구 숫자를 입력 했을 때만 통과
+
+2.함수 :과목들의 점수에 대한 평균을 계산
+
+1번 과 2번을 함수로 정의한 후 기존 작성한 것에 적용시켜볼 것.
+
+def num_input(study):
+    while True:
+        num=input("{}의 점수 :".format(study))
+        a=0
+        for c in num:
+            if c not in "0123456789":
+                print("숫자로 다시 입력해주세요")
+                a=a+1
+                break
+        if a==0:
+            break
+    return num
+
+def average1(study_list,score_list):
+    
+    num=0
+    print("현재 등록된 과목은",end=" ")
+    for study in study_list:
+        print("'{}'".format(study),end=" ")
+    print("입니다.")
+    for score in score_list:
+        num=num+score
+        
+    print("전체 점수의 평균은 {} 입니다.".format(num/len(score_list)))    
+        
+
+study_list=[]
+score_list=[]
+score1 = 0
+while True:
+	study=input("과목 : ")
+	score=int(num_input(study))
+	study_list.append(study)
+	score_list.append(score)
+	while True:
+		answer=input("추가로 입력하시겠습니까? (예 or 아니오) : ")
+		if answer not in ['예','아니오','y','n']:
+			print("다시 입력해주세요")
+			continue
+		else:
+			break
+	
+	if answer == '예' or answer == 'y':
+		continue
+	else : 
+		average1(study_list,score_list)
+		break
+
+==========================================================================
+
+금일 실습한 문제 중에서 계산기 작성 실습 부분에서 
+
+1.함수 : 숫자 입력시 숫자 외에 것을 입력하면 "숫자가 아닙니다. 다시 입력해주세요." 라는 메세지가 뜨도록 해서 숫자로 입력 했을 때만 통과
+
+2.함수 : 사칙연산 부분을 함수로 불러내는 형식으로 하되 사칙연산별 각각 함수를 만들지 말고 하나의 함수에 사칙연산부분을 모두 작성한 후에 구분해서 계산되도록 하시오.
+
+1번 과 2번을 함수로 정의한 후 기존 작성한 것에 적용시켜볼 것.
+
+def number():
+    while True:
+        num=input("number : ")
+        for c in num:
+            a=1
+            if c not in "0123456789":	
+                print(" 숫자를 입력하지 않았습니다.")
+                a=a-1
+                break	
+        if a ==1:
+            return int(num)
+
+def cal(numa,numb,choice):
+
+    if choice == '1':
+        print("{} 와 {}의 합은 {} 입니다.\n".format(numa,numb,numa+numb))
+    if choice == '2':
+        print("{} 와 {}의 차는 {} 입니다.\n".format(numa,numb,numa-numb))	
+    if choice == '3':
+        print("{} 와 {}의 곱은 {} 입니다.\n".format(numa,numb,numa*numb))
+    if choice == '4':
+        print("{} 에서 {}를 나눈 값은 {} 입니다.\n".format(numa,numb,numa/numb))
+    if choice == '5':
+        print("{} 의 {}승은 {} 입니다.\n".format(numa,numb,numa**numb))            
+
+MENU = """-----------------
+메뉴
+1.더하기
+2.빼기
+3.곱하기
+4.나누기
+5.자승
+6.나가기
+-----------------
+메뉴를 선택하세요. : """
+
+
+while True:
+    while True:
+        choice=input(MENU)
+        if choice not in "123456":
+            print("잘못 선택하셨습니다. 다시 선택해주세요.")	
+        else:
+            break
+    if choice == '6':
+        print("종료합니다")
+        break
+    num1=number()
+    num2=number()
+    cal(num1,num2,choice)
+	
+
+================================================================================
+
+5월6일에 진행했던 실습이다. 
+
+통장에서 10,000원이 들어있다. 
+input()를 통해서 입력을 '출금'과 '입금'을 입력받고 금액부분을 입력받도록 하시오.
+출금을 하면 "XXX원이 출금되었습니다. 현재 잔고는 XXX입니다." 출력
+예금을 하면 "XXX원이 입금되었습니다. 현재 잔고는 XXX입니다." 출력
+출금시에 잔고가 부족하면 "현재 잔고 부족입니다. XXX가 부족합니다." 라고 출력
+통장잔고가 0원이 되면 "통장을 파기합니다" 출력
+
+
+atm = 10000
+
+while True:
+	cmd = input("입금, 출금을 선택해주세요 : ")
+	if cmd not in ["입금","출금"]:
+		print("잘못 입력하셨습니다.")
+		contiue
+	money = int(input("금액 : "))	
+	if cmd == "입금":
+		atm=atm+money
+		print("{}가 입금되었습니다. 현재 잔고는 {}입니다.".format(money,atm))
+	elif atm >= money:
+		atm=atm-money
+		print("{}가 출금되었습니다. 현재 잔고는 {}입니다.".format(money,atm))
+	else:
+		print("{}을 요청하셨지만 잔액이 {} 부족합니다. 현재 잔고는 {}입니다.".format(money,money-atm,atm))
+
+	if atm == 0:
+		print("현재 잔고가 {} 입니다. 통장을 파기 합니다".format(atm))
+		break
+
+1.함수 : 금액 입력시 숫자 외에 것을 입력하면 "숫자가 아닙니다. 다시 입력해주세요." 라는 메세지가 뜨도록 해서 금액을 숫자로 금액을 입력 했을 때만 통과
+
+2.함수 : 통장을 파기 하기 전에 "현재 잔고는 {} 입니다" 메세지 후에 "계속 거래 하시겠습니까? 예:1,아니오:2) " 뜨도록 해서 예 나 1을 선택하면 다시 입금/출금이 뜨고 아니오를 선택하면 "통장을 파기 합니다"라는 메세지와 함께 프로그램이 종료
+
+1번과 2번 함수를 작성해서 적용시켜보시오.(새로운 코드를 작성해도 되고 기존에 있는 코드를 변형해서 해도 됨)
+
+def money_input(cmd):
+    while True:
+        num=input("{} 금액 :".format(cmd))
+        a=0
+        for c in num:
+            if c not in "0123456789":
+                print("숫자로 다시 입력해주세요")
+                a=a+1
+                break
+        if a==0:
+            break
+    return num
+
+def confirm():
+    last_confirm =input("계속 통장을 사용하시겠습니까? (1-계속 사용,2-통장 폐기)")
+    if last_confirm == '1':
+        print("계속 사용을 선택하셨습니다.")
+        return 0
+    else:
+        print("통장 폐기를 선택하셨습니다.\n통장을 폐기합니다")
+        return 1
+    
+
+
+atm = 10000
+a=1
+while True:
+	cmd = input("입금, 출금을 선택해주세요 : ")
+	if cmd not in ["입금","출금"]:
+		print("잘못 입력하셨습니다.")
+		contiue
+	money = int(money_input(cmd))
+	if cmd == "입금":
+		atm=atm+money
+		print("{}가 입금되었습니다. 현재 잔고는 {}입니다.".format(money,atm))
+	elif atm >= money:
+		atm=atm-money
+		print("{}가 출금되었습니다. 현재 잔고는 {}입니다.".format(money,atm))
+	else:
+		print("{}을 요청하셨지만 잔액이 {} 부족합니다. 현재 잔고는 {}입니다.".format(money,money-atm,atm))
+	if atm == 0:
+		a=a+confirm()
+	if a==2:
+		break
+
+==============================================================================
+
