@@ -1,0 +1,146 @@
+﻿내장 함수 실습
+
+1. "AsDFghJkLQwRtYu" 문자열을 정렬해서 리스트 list1로 만드시오.
+
+list1=sorted("AsDFghJkLQwRtYu")
+
+2.list1의 최대값과 최소값을 구한다음에 문자열로 만드시오.
+
+max(list1)
+
+min(list1)
+
+3."12354+56787" 문자열 내의 수식을 실제로 적용하시오.
+
+eval("12354+56787")
+
+4.3번 결과값이 타입을 구하시오.
+
+type(eval("12354+56787"))
+
+5. 'r' 의 아스키 코드 과 100이라는 아스키코드값을 가진 문자는 무엇인지 알아보시오.
+
+ord('r')
+
+chr(100)
+
+6.[1,2,3,4,5] [11,22,33,44,55] [111,222,333,444,555]를  [(1,11,111),(2,22,222),(3,33,333),(4,44,444),(5,55,555)] 형태로 만드시오.
+
+list(zip([1,2,3,4,5],[11,22,33,44,55],[111,222,333,444,555]))
+
+7.map 함수를 이용해서 "abcdefg"를 "aabbccddeeffgg"로 만드시오.
+
+def mul(a):
+	return a*2
+
+list2=list(map(mul,"abcdefg"))
+
+or
+
+list2=list(map(lambda a:a*2,"abcdefg"))
+
+
+j=""
+for i in list2:
+	j=j+i
+i=0
+while <(len(lis2)):
+	j=j+list2[i]
+	i=i+1
+
+print(j)
+
+8. list3=[-1,0,4,-6,9,-4,10]를 filter 함수를 통해 음수만 출력 되도록 하시오.
+
+def test1(num):
+	return num <0
+
+print(list(filter(test1,list3)))
+
+or
+
+print(list(filter(lambda x:x<0,list3)))		
+
+-----------------------------------------------------------------
+
+외장 함수 실습
+
+1. sys 모듈을 이용해서 모듈등록경로에 C:\test 폴더를 추가해보시오.
+
+import sys
+
+sys.path.append("C:\\test")
+
+2. pickle.dump() 함수를 통해서 list1=[1,2,3] list2=[4,5,6] list3=[7,8,9] 3개의 리스트를 자료형 그대로 test.txt에 넣으시오.
+
+import pickle
+
+f=open("test.txt","wb")
+list1=[1,2,3] 
+list2=[4,5,6] 
+list3=[7,8,9]
+list4=[list1,list2,list3]
+
+for lista in list4:
+	pickle.dump(lista,f)
+
+f.close()
+
+3. pickle.load() 를 통해서 test.txt 에서 자료형 그대로 뺀후 [(1,4,7),(2,5,6),(3,6,9)] 형태로 가공해보시오.
+
+import pickle
+
+f=open("test.txt","rb")
+listb=[]
+
+for i in [1,2,3]:
+    lista=pickle.load(f)
+    print(type(lista))
+    print(lista)
+    listb.append(lista)
+    print(listb)
+
+print(list(zip(listb[0],listb[1],listb[2])))
+
+4. random 함수를 통해서 ('가위','바위','보')를 랜덤하게 10번 출력되게 하시오.
+
+import random
+
+srplist1=['가위','바위','보']
+i=1
+
+while i<=10:
+    srp=srplist1[random.randint(0,2)]
+    print(srp)
+    i=i+1
+
+or
+
+import random
+
+srplist1=['가위','바위','보']
+i=1
+
+while i<=10:
+    srp=random.choice(srplist1)
+    print(srp)
+    i=i+1
+
+or
+
+srplist1=['가위','바위','보']
+
+while i<=10:
+	random.shuffle(srplist1)
+	print(srplist1[0])
+	i=i+1
+
+
+
+
+
+
+
+
+
+
